@@ -3,62 +3,88 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DataBuyGH - MTN ONLY</title>
+<title>DataBuyGH | MTN Data Bundles</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  body { margin:0; font-family:Arial; background:#FFCC00; display:flex; justify-content:center; padding:20px; min-height:100vh; }
-  .card { background:#fff; width:100%; max-width:420px; border-radius:20px; padding:20px; box-shadow:0 8px 25px rgba(0,0,0,0.3); }
-  .mtn-header { background:#000; color:#FFCC00; text-align:center; padding:12px; border-radius:12px; font-weight:bold; font-size:20px; }
-  .mtn-warn { background:#FF0000; color:#fff; padding:12px; border-radius:10px; text-align:center; font-weight:bold; margin:15px 0; }
-  .delay-notice { background:#FFF3CD; border:2px solid #FF0000; border-left:6px solid #FF0000; padding:12px; border-radius:8px; font-size:13px; margin:12px 0; }
-  .contact-box { background:#000; color:#fff; padding:14px; border-radius:10px; text-align:center; margin:15px 0; }
-  .contact-box a { color:#FFCC00; text-decoration:none; font-weight:bold; }
-  input,select,textarea,button { width:100%; padding:14px; margin:8px 0; border-radius:10px; border:1px solid #ccc; font-size:16px; box-sizing:border-box; }
-  button.pay-btn { background:#000; color:#FFCC00; font-weight:bold; font-size:18px; border:none; cursor:pointer; }
-  .whatsapp-float { position:fixed; bottom:20px; right:20px; background:#25D366; color:#fff; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; text-decoration:none; }
-  .feedback { margin-top:25px; border-top:2px dashed #FFCC00; padding-top:15px; }
-  button.fb-btn { background:#FFCC00; color:#000; font-weight:bold; border:2px solid #000; }
+    * { font-family:'Poppins', Arial, sans-serif; }
+  body { margin:0; background:#FFCC00; display:flex; justify-content:center; padding:20px; min-height:100vh; }
+  .card { background:#fff; width:100%; max-width:420px; border-radius:24px; padding:24px; box-shadow:0 12px 30px rgba(0,0,0,0.25); }
+  .logo { text-align:center; font-weight:700; font-size:26px; letter-spacing:-0.5px; }
+  .logo span { color:#FFCC00; background:#000; padding:2px 8px; border-radius:6px; margin-left:4px; }
+  .subtitle { text-align:center; color:#666; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; margin-top:4px; font-weight:600; }
+  .mtn-warn { background:linear-gradient(135deg,#FF0000,#CC0000); color:#fff; padding:14px; border-radius:12px; text-align:center; font-weight:700; margin:18px 0; letter-spacing:0.3px; font-size:13px; line-height:1.4; }
+  .title { text-align:center; font-size:22px; font-weight:700; margin:18px 0 6px; letter-spacing:-0.3px; }
+  .desc { text-align:center; color:#777; font-size:13px; margin-bottom:16px; line-height:1.5; }
+  .delay-notice { background:#FFF8E1; border-left:5px solid #FF0000; padding:12px 14px; border-radius:10px; font-size:12.5px; margin:14px 0; line-height:1.6; color:#333; }
+  .delay-notice b { letter-spacing:0.2px; }
+  label { font-size:12px; font-weight:600; color:#333; letter-spacing:0.5px; text-transform:uppercase; margin:10px 0 4px; display:block; }
+  select, input { width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid #E0E0E0; font-size:15px; box-sizing:border-box; font-weight:500; transition:0.2s; }
+  select:focus, input:focus { border-color:#000; outline:none; }
+  button.pay-btn { background:#000; color:#FFCC00; font-weight:700; font-size:16px; border:none; cursor:pointer; margin-top:12px; letter-spacing:0.5px; padding:16px; border-radius:12px; }
+  button.pay-btn:hover { background:#222; }
+  .contact-box { background:#111; color:#fff; padding:16px; border-radius:14px; text-align:center; margin:20px 0; line-height:1.8; }
+  .contact-box .head { font-size:12px; letter-spacing:1.2px; text-transform:uppercase; color:#999; font-weight:600; margin-bottom:6px; }
+  .contact-box a { color:#FFCC00; text-decoration:none; font-weight:600; font-size:14px; letter-spacing:0.2px; }
+  .contact-box span { font-size:12px; color:#AAA; letter-spacing:0.3px; }
+  .feedback { margin-top:22px; border-top:1px solid #EEE; padding-top:20px; }
+  .feedback h3 { font-size:16px; font-weight:700; letter-spacing:-0.2px; margin-bottom:12px; }
+  textarea { width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid #E0E0E0; font-size:14px; box-sizing:border-box; resize:none; }
+  button.fb-btn { background:#FFCC00; color:#000; font-weight:700; border:2px solid #000; margin-top:8px; letter-spacing:0.3px; }
+  .whatsapp-float { position:fixed; bottom:22px; right:22px; background:#25D366; color:#fff; width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; text-decoration:none; box-shadow:0 6px 18px rgba(0,0,0,.25); z-index:99; }
 </style>
 </head>
 <body>
 <a class="whatsapp-float" href="https://wa.me/233556833313" target="_blank">💬</a>
 <div class="card">
-  <div class="mtn-header">DataBuyGH.com - MTN Y'ello</div>
-  <div class="mtn-warn">🚨 MTN ONLY! 024, 025, 053, 054, 055, 059 🚨<br>Vodafone / AirtelTigo WILL NOT WORK!</div>
-  <h2 style="text-align:center;">Instant Data</h2>
-  <div class="delay-notice">⚠️ Data delivered within 24hrs. Due to MTN traffic it can delay. Please be patient! Do NOT pay twice.</div>
+  <div class="logo">DataBuy<span>GH</span></div>
+  <div class="subtitle">Mtn Y'ello • Instant Delivery</div>
+
+  <div class="mtn-warn">🚨 MTN ONLY: 024 • 025 • 053 • 054 • 055 • 059<br><span style="font-weight:400; font-size:11px; opacity:0.9;">Vodafone & AirtelTigo will NOT work</span></div>
+
+  <div class="title">Buy Data Bundle</div>
+  <div class="desc">Fast • Affordable • 24hrs Delivery</div>
+
+  <div class="delay-notice">⚠️ <b>Delivery Notice:</b> Data is delivered within 24 hours. Due to MTN traffic, it may delay slightly. Please be patient and <b>do not pay twice.</b></div>
+
+  <label>Choose Bundle</label>
   <select id="bundle">
-    <option value="4.50">MTN 1GB - GHS 4.50</option>
-    <option value="9.00">MTN 2GB - GHS 9.00</option>
-    <option value="14.00">MTN 3GB - GHS 14.00</option>
-    <option value="22.50">MTN 5GB - GHS 22.50</option>
-    <option value="27.00">MTN 6GB - GHS 27.00</option>
-    <option value="35.00">MTN 8GB - GHS 35.00</option>
-    <option value="42.50">MTN 10GB - GHS 42.50</option>
-    <option value="59.50">MTN 15GB - GHS 59.50</option>
-    <option value="79.50">MTN 20GB - GHS 79.50</option>
-    <option value="99.50">MTN 25GB - GHS 99.50</option>
-    <option value="119.00">MTN 30GB - GHS 119.00</option>
-    <option value="156.00">MTN 40GB - GHS 156.00</option>
-    <option value="197.00">MTN 50GB - GHS 197.00</option>
-    <option value="395.00">MTN 100GB - GHS 395.00</option>
+    <option value="4.50">1GB — GHS 4.50</option>
+    <option value="9.00">2GB — GHS 9.00</option>
+    <option value="14.00">3GB — GHS 14.00</option>
+    <option value="22.50">5GB — GHS 22.50</option>
+    <option value="27.00">6GB — GHS 27.00</option>
+    <option value="35.00">8GB — GHS 35.00</option>
+    <option value="42.50">10GB — GHS 42.50</option>
+    <option value="59.50">15GB — GHS 59.50</option>
+    <option value="79.50">20GB — GHS 79.50</option>
+    <option value="99.50">25GB — GHS 99.50</option>
+    <option value="119.00">30GB — GHS 119.00</option>
+    <option value="156.00">40GB — GHS 156.00</option>
+    <option value="197.00">50GB — GHS 197.00</option>
+    <option value="395.00">100GB — GHS 395.00</option>
   </select>
-  <input id="phone" type="tel" placeholder="MTN Number 055XXXXXXX">
-  <button class="pay-btn" onclick="payWithMoMo()">Pay with MoMo Instantly</button>
+
+  <label>MTN Number</label>
+  <input id="phone" type="tel" placeholder="e.g. 055 683 3313">
+
+  <button class="pay-btn" onclick="payWithMoMo()">Pay with MoMo →</button>
+
   <div class="contact-box">
-    📞 Need Help?<br>
-    <a href="https://wa.me/233556833313">WhatsApp: 0556833313</a><br>
-    <a href="tel:0556833313">Call: 0556833313</a><br>
-    <span style="font-size:12px;">✉️ mensahcyber2@gmail.com</span>
+    <div class="head">Need Help?</div>
+    <a href="https://wa.me/233556833313">💬 WhatsApp: 0556833313</a><br>
+    <a href="tel:0556833313">📞 Call: 0556833313</a><br>
+    <span>✉️ mensahcyber2@gmail.com</span>
   </div>
+
   <div class="feedback">
-    <h3>💬 Feedback</h3>
+    <h3>Feedback & Support</h3>
     <form action="https://formsubmit.co/mensahcyber2@gmail.com" method="POST">
       <input type="hidden" name="_subject" value="DATABUYGH Feedback">
       <input type="hidden" name="_captcha" value="false">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="tel" name="phone" placeholder="Your MTN Number" required>
-      <textarea name="message" rows="3" placeholder="I paid but didn't get data..." required></textarea>
-      <button type="submit" class="fb-btn">📩 Send</button>
+      <input type="text" name="name" placeholder="Your full name" required style="margin-bottom:8px;">
+      <input type="tel" name="phone" placeholder="Your MTN number" required style="margin-bottom:8px;">
+      <textarea name="message" rows="3" placeholder="Tell us your issue..." required></textarea>
+      <button type="submit" class="fb-btn">Send Message</button>
     </form>
   </div>
 </div>
@@ -67,14 +93,14 @@
 function payWithMoMo(){
   let price = document.getElementById('bundle').value;
   let phone = document.getElementById('phone').value;
-  if(phone.length < 10){ alert('Enter correct MTN number'); return; }
+  if(phone.length < 10){ alert('⚠️ Please enter correct MTN number'); return; }
   PaystackPop.setup({
     key: 'pk_live_08aa1c87ae453e7ae1c371a65ab1fe7bb3836ed4',
     email: 'mensahcyber2@gmail.com',
     amount: price*100,
     currency: 'GHS',
     channels: ['mobile_money'],
-    callback: function(res){ alert('✅ Success! Ref: '+res.reference); }
+    callback: function(res){ alert('✅ Success! Reference: '+res.reference+'\nData will arrive within 24hrs to '+phone); }
   }).openIframe();
 }
 </script>

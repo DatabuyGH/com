@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataBuyGH - MTN ONLY</title>
+<style>
+  body { margin:0; font-family:Arial; background:#FFCC00; display:flex; justify-content:center; padding:20px; position:relative; }
+  body::before { 
+    content:""; position:fixed; inset:0; 
+    background-image: url('https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg');
+    background-size: 130px; opacity:0.09; z-index:-1; 
+  }
+  .people-banner { width:100%; border-radius:12px; margin-bottom:10px; }
+  .card { background:#fff; width:100%; max-width:420px; border-radius:20px; padding:20px; box-shadow:0 8px 25px rgba(0,0,0,0.2); }
+  .mtn-header { background:#000; color:#FFCC00; text-align:center; padding:12px; border-radius:12px; font-weight:bold; font-size:20px; }
+  .mtn-warn { background:#FF0000; color:#fff; padding:12px; border-radius:10px; text-align:center; font-weight:bold; margin:15px 0; animation: blink 1s infinite; }
+  @keyframes blink { 0% { opacity:1; } 50% { opacity:0.7; } }
+  .delay-notice { background:#FFF3CD; border:2px solid #FF0000; border-left:6px solid #FF0000; padding:12px; border-radius:8px; font-size:13px; margin:12px 0; line-height:1.5; }
+  .contact-box { background:#000; color:#fff; padding:14px; border-radius:10px; text-align:center; margin:15px 0; }
+  .contact-box a { color:#FFCC00; text-decoration:none; font-weight:bold; }
+  input,select,textarea,button { width:100%; padding:14px; margin:8px 0; border-radius:10px; border:1px solid #ccc; font-size:16px; box-sizing:border-box; }
+  button.pay-btn { background:#000; color:#FFCC00; font-weight:bold; font-size:18px; border:none; cursor:pointer; }
+  .whatsapp-float { position:fixed; bottom:20px; right:20px; background:#25D366; color:#fff; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; text-decoration:none; box-shadow:0 4px 10px rgba(0,0,0,.3); z-index:99; }
+  .feedback { margin-top:25px; border-top:2px dashed #FFCC00; padding-top:15px; }
+  button.fb-btn { background:#FFCC00; color:#000; font-weight:bold; border:2px solid #000; }
+</style>
+</head>
+<body>
+
+<a class="whatsapp-float" href="https://wa.me/233556833313" target="_blank">💬</a>
+
+<div class="card">
+  <img class="people-banner" src="https://www.mtn.com.gh/wp-content/uploads/2023/09/MTN-Ghana-Brand-Refresh-People.jpg" alt="MTN People Y'ello">
+  
+  <div class="mtn-header">DataBuyGH.com - MTN Y'ello</div>
+  
+  <div class="mtn-warn">
+    🚨 WARNING! MTN ONLY! 🚨<br>
+    ⚠️ 024, 025, 053, 054, 055, 059 ONLY ⚠️<br>
+    <span style="font-size:12px;">Vodafone / AirtelTigo WILL NOT WORK!</span>
+  </div>
+  
+  <h2 style="text-align:center;margin:8px 0;">Instant Data</h2>
+
+  <div class="delay-notice">
+    ⚠️ <b>IMPORTANT NOTICE:</b><br>
+    ⏳ Data will be delivered within 24hours time. But sometimes due to MTN network traffic, it can delay. Please exercise patience!<br>
+    🚫 <b>Do NOT pay twice if delayed.</b>
+  </div>
+
+  <select id="bundle">
+    <option value="4.50">MTN 1GB - GHS 4.50 - MTN ONLY</option>
+    <option value="9.00">MTN 2GB - GHS 9.00 - MTN ONLY</option>
+    <option value="14.00">MTN 3GB - GHS 14.00 - MTN ONLY</option>
+    <option value="22.50">MTN 5GB - GHS 22.50 - MTN ONLY</option>
+    <option value="27.00">MTN 6GB - GHS 27.00 - MTN ONLY</option>
+    <option value="35.00">MTN 8GB - GHS 35.00 - MTN ONLY</option>
+    <option value="42.50">MTN 10GB - GHS 42.50 - MTN ONLY</option>
+    <option value="59.50">MTN 15GB - GHS 59.50 - MTN ONLY</option>
+    <option value="79.50">MTN 20GB - GHS 79.50 - MTN ONLY</option>
+    <option value="99.50">MTN 25GB - GHS 99.50 - MTN ONLY</option>
+    <option value="119.00">MTN 30GB - GHS 119.00 - MTN ONLY</option>
+    <option value="156.00">MTN 40GB - GHS 156.00 - MTN ONLY</option>
+    <option value="197.00">MTN 50GB - GHS 197.00 - MTN ONLY</option>
+    <option value="395.00">MTN 100GB - GHS 395.00 - MTN ONLY</option>
+  </select>
+  <input id="phone" type="tel" placeholder="MTN Number 055XXXXXXX">
+  <button class="pay-btn" onclick="payWithMoMo()">Pay with MoMo Instantly</button>
+
+  <div class="contact-box">
+    📞 Need Help? Contact Us<br>
+    <a href="https://wa.me/233556833313?text=Hello%20DataBuyGH%20I%20need%20help%20with%20my%20data">💬 WhatsApp: 0556833313</a><br>
+    <a href="tel:0556833313">📞 Call: 0556833313</a><br>
+    <span style="font-size:12px;">✉️ databuyghcom@gmail.com</span>
+  </div>
+
+  <div class="feedback">
+    <h3>💬 Feedback / Help</h3>
+    <form action="https://formsubmit.co/databuyghcom@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="DATABUYGH Customer Feedback">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="tel" name="phone" placeholder="Your MTN Number" required>
+      <textarea name="message" rows="3" placeholder="I paid but didn't get data..." required></textarea>
+      <button type="submit" class="fb-btn">📩 Send to databuyghcom@gmail.com</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+function payWithMoMo(){
+  let price = document.getElementById('bundle').value;
+  let phone = document.getElementById('phone').value;
+  if(phone.length < 10){ alert('⚠️ Enter correct MTN number'); return; }
+  PaystackPop.setup({
+    key: 'pk_live_6401661c20ff7303415f3472e4ba17f3e1de9407',
+    email: phone+'@databuygh.com',
+    amount: price*100,
+    currency: 'GHS',
+    channels: ['mobile_money'],
+    callback: function(res){ alert('✅ Success! Ref: '+res.reference+' Data to '+phone+' in 24hrs'); }
+  }).openIframe();
+}
+</script>
+</body>
+</html>

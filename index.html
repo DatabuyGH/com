@@ -17,14 +17,17 @@
   .desc { text-align:center; color:#777; font-size:13px; margin-bottom:16px; }
   .delay-notice { background:#FFF8E1; border-left:5px solid #FF0000; padding:12px 14px; border-radius:10px; font-size:12.5px; margin:14px 0; line-height:1.6; color:#333; }
   label { font-size:12px; font-weight:600; color:#333; text-transform:uppercase; margin:10px 0 4px; display:block; }
-  select, input { width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid #E0E0E0; font-size:15px; box-sizing:border-box; }
+  select, input, textarea { width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid #E0E0E0; font-size:14px; box-sizing:border-box; }
   button.pay-btn { background:#000; color:#FFCC00; font-weight:700; font-size:16px; border:none; cursor:pointer; margin-top:12px; padding:16px; border-radius:12px; width:100%; }
+  button.fb-btn { background:#FFCC00; color:#000; font-weight:700; font-size:14px; border:none; cursor:pointer; margin-top:10px; padding:12px; border-radius:12px; width:100%; }
   .contact-box { background:#111; color:#fff; padding:16px; border-radius:14px; text-align:center; margin:20px 0; }
   .contact-box a { color:#FFCC00; text-decoration:none; font-weight:600; }
   .feedback { background:#f9f9f9; border-radius:14px; padding:14px; margin-top:16px; }
   .feedback h4 { margin:0 0 10px; font-size:14px; text-align:center; }
-  .fb-item { font-size:12.5px; margin-bottom:8px; border-bottom:1px dashed #ddd; padding-bottom:6px; }
-  .fb-item b { color:#000; }
+  .fb-item { font-size:12.5px; margin-bottom:8px; border-bottom:1px dashed #ddd; padding-bottom:8px; }
+  .fb-form { background:#fff; border:2px dashed #FFCC00; border-radius:14px; padding:14px; margin-top:16px; }
+  .fb-form h4 { margin:0 0 10px; font-size:14px; text-align:center; }
+  .stars { text-align:center; font-size:22px; margin:8px 0; }
   .whatsapp-float { position:fixed; bottom:22px; right:22px; background:#25D366; color:#fff; width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; text-decoration:none; }
 </style>
 </head>
@@ -32,14 +35,11 @@
 <a class="whatsapp-float" href="https://wa.me/233556833313" target="_blank">💬</a>
 <div class="card">
   <div class="logo">DataBuy<span>GH</span></div>
-  <div class="subtitle">MTN Y'ello • Instant Delivery</div>
+  <div class="subtitle">Mtn Y'ello • Instant Delivery</div>
   <div class="mtn-warn">🚨 MTN ONLY: 024 • 025 • 053 • 054 • 055 • 059</div>
   <div class="title">Buy Data Bundle</div>
   <div class="desc">Fast • Affordable • 24hrs Delivery</div>
-
-  <div class="delay-notice">
-    ⏰ <b>Delivery Notice:</b> Most orders delivered in 5-20 mins. During peak hours may take up to 1 hour. Please stay online after payment.
-  </div>
+  <div class="delay-notice">⏰ <b>Delivery Notice:</b> Most orders delivered in 5-20 mins. During peak hours may take up to 1 hour.</div>
 
   <label>Choose Bundle</label>
   <select id="bundle">
@@ -62,11 +62,28 @@
   <input id="phone" type="tel" placeholder="e.g. 055 683 3313">
   <button class="pay-btn" onclick="payWithMoMo()">Pay with MoMo →</button>
 
-  <div class="feedback">
+  <div class="feedback" id="feedbackList">
     <h4>⭐ Customer Feedback</h4>
     <div class="fb-item"><b>Ama K. - 055****123</b> : Fast delivery! Got my 5GB in 3 mins 🔥</div>
     <div class="fb-item"><b>Kwesi M. - 054****789</b> : Legit vendor, I buy every week</div>
     <div class="fb-item"><b>David O. - 059****456</b> : Very affordable, thanks DataBuyGH</div>
+  </div>
+
+  <div class="fb-form">
+    <h4>📝 Leave Your Feedback</h4>
+    <label>Your Name</label>
+    <input id="fbName" type="text" placeholder="e.g. Ama">
+    <label>Your Experience</label>
+    <textarea id="fbMessage" rows="3" placeholder="How was our service?"></textarea>
+    <label>Rating</label>
+    <div class="stars" id="starRating">
+      <span onclick="setStars(1)">⭐</span>
+      <span onclick="setStars(2)">⭐</span>
+      <span onclick="setStars(3)">⭐</span>
+      <span onclick="setStars(4)">⭐</span>
+      <span onclick="setStars(5)">⭐</span>
+    </div>
+    <button class="fb-btn" onclick="submitFeedback()">Submit Feedback →</button>
   </div>
 
   <div class="contact-box">
@@ -76,31 +93,49 @@
 </div>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script>
+let currentRating = 5;
+function setStars(n){ currentRating=n; document.querySelectorAll('#starRating span').forEach((s,i)=>{ s.style.opacity=i<n?'1':'0.3'; }); }
+setStars(5);
+window.onload = function(){
+  let saved = JSON.parse(localStorage.getItem('databuy_feedbacks') || '[]');
+  let list = document.getElementById('feedbackList');
+  saved.forEach(f=>{
+    let div = document.createElement('div'); div.className='fb-item';
+    div.innerHTML=`<b>${f.name}</b> : ${f.msg} ${'⭐'.repeat(f.rating)}`;
+    list.appendChild(div);
+  });
+};
 function payWithMoMo(){
-  let price = document.getElementById('bundle').value;
-  let phone = document.getElementById('phone').value;
-  let select = document.getElementById('bundle');
-  let bundleText = select.options[select.selectedIndex].text;
-  if(phone.length < 10){ alert('⚠️ Please enter correct MTN number'); return; }
+  let price=document.getElementById('bundle').value;
+  let phone=document.getElementById('phone').value;
+  let bundleText=document.getElementById('bundle').options[document.getElementById('bundle').selectedIndex].text;
+  if(phone.length<10){ alert('⚠️ Please enter correct MTN number'); return; }
   PaystackPop.setup({
-    key: 'pk_live_08aa1c87ae453e7ae1c371a65ab1fe7bb3836ed4',
-    email: 'mensahcyber2@gmail.com',
-    amount: price*100,
-    currency: 'GHS',
-    channels: ['mobile_money'],
-    callback: function(res){ 
+    key:'pk_live_08aa1c87ae453e7ae1c371a65ab1fe7bb3836ed4',
+    email:'mensahcyber2@gmail.com',
+    amount:price*100,
+    currency:'GHS',
+    channels:['mobile_money'],
+    callback:function(res){ 
       alert('✅ Payment Success! Ref: '+res.reference);
-      fetch('https://sms.arkesel.com/api/v2/sms/send', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json','api-key': 'bkFRb2ZvU3pJV0JUemt4dVFibHU'},
-        body: JSON.stringify({
-          sender: 'DataBuyGH',
-          message: `NEW ORDER! GHS ${price} - ${bundleText} for ${phone}. Ref: ${res.reference}`,
-          recipients: ['0556833313', '0535791780']
-        })
-      });
+      fetch('https://sms.arkesel.com/api/v2/sms/send',{method:'POST',headers:{'Content-Type':'application/json','api-key':'bkFRb2ZvU3pJV0JUemt4dVFibHU'},body:JSON.stringify({sender:'DataBuyGH',message:`NEW ORDER! GHS ${price} - ${bundleText} for ${phone}. Ref: ${res.reference}`,recipients:['0556833313','0535791780']})});
     }
   }).openIframe();
+}
+function submitFeedback(){
+  let name=document.getElementById('fbName').value.trim();
+  let msg=document.getElementById('fbMessage').value.trim();
+  if(!name||!msg){ alert('Please enter name and feedback'); return; }
+  let list=document.getElementById('feedbackList');
+  let div=document.createElement('div'); div.className='fb-item';
+  div.innerHTML=`<b>${name}</b> : ${msg} ${'⭐'.repeat(currentRating)}`;
+  list.appendChild(div);
+  let saved=JSON.parse(localStorage.getItem('databuy_feedbacks')||'[]');
+  saved.push({name:name,msg:msg,rating:currentRating});
+  localStorage.setItem('databuy_feedbacks',JSON.stringify(saved));
+  fetch('https://sms.arkesel.com/api/v2/sms/send',{method:'POST',headers:{'Content-Type':'application/json','api-key':'bkFRb2ZvU3pJV0JUemt4dVFibHU'},body:JSON.stringify({sender:'DataBuyGH',message:`NEW FEEDBACK! From ${name} (${currentRating} stars): ${msg}`,recipients:['0556833313','0535791780']})});
+  alert('✅ Thanks '+name+'! Your feedback is live!');
+  document.getElementById('fbName').value=''; document.getElementById('fbMessage').value='';
 }
 </script>
 </body>

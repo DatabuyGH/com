@@ -16,21 +16,12 @@
   .title { text-align:center; font-size:22px; font-weight:700; margin:18px 0 6px; letter-spacing:-0.3px; }
   .desc { text-align:center; color:#777; font-size:13px; margin-bottom:16px; line-height:1.5; }
   .delay-notice { background:#FFF8E1; border-left:5px solid #FF0000; padding:12px 14px; border-radius:10px; font-size:12.5px; margin:14px 0; line-height:1.6; color:#333; }
-  .delay-notice b { letter-spacing:0.2px; }
   label { font-size:12px; font-weight:600; color:#333; letter-spacing:0.5px; text-transform:uppercase; margin:10px 0 4px; display:block; }
-  select, input { width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid #E0E0E0; font-size:15px; box-sizing:border-box; font-weight:500; transition:0.2s; }
-  select:focus, input:focus { border-color:#000; outline:none; }
-  button.pay-btn { background:#000; color:#FFCC00; font-weight:700; font-size:16px; border:none; cursor:pointer; margin-top:12px; letter-spacing:0.5px; padding:16px; border-radius:12px; }
-  button.pay-btn:hover { background:#222; }
-  .contact-box { background:#111; color:#fff; padding:16px; border-radius:14px; text-align:center; margin:20px 0; line-height:1.8; }
-  .contact-box .head { font-size:12px; letter-spacing:1.2px; text-transform:uppercase; color:#999; font-weight:600; margin-bottom:6px; }
-  .contact-box a { color:#FFCC00; text-decoration:none; font-weight:600; font-size:14px; letter-spacing:0.2px; }
-  .contact-box span { font-size:12px; color:#AAA; letter-spacing:0.3px; }
-  .feedback { margin-top:22px; border-top:1px solid #EEE; padding-top:20px; }
-  .feedback h3 { font-size:16px; font-weight:700; letter-spacing:-0.2px; margin-bottom:12px; }
-  textarea { width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid #E0E0E0; font-size:14px; box-sizing:border-box; resize:none; }
-  button.fb-btn { background:#FFCC00; color:#000; font-weight:700; border:2px solid #000; margin-top:8px; letter-spacing:0.3px; }
-  .whatsapp-float { position:fixed; bottom:22px; right:22px; background:#25D366; color:#fff; width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; text-decoration:none; box-shadow:0 6px 18px rgba(0,0,0,.25); z-index:99; }
+  select, input { width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid #E0E0E0; font-size:15px; box-sizing:border-box; font-weight:500; }
+  button.pay-btn { background:#000; color:#FFCC00; font-weight:700; font-size:16px; border:none; cursor:pointer; margin-top:12px; padding:16px; border-radius:12px; width:100%; }
+  .contact-box { background:#111; color:#fff; padding:16px; border-radius:14px; text-align:center; margin:20px 0; }
+  .contact-box a { color:#FFCC00; text-decoration:none; font-weight:600; }
+  .whatsapp-float { position:fixed; bottom:22px; right:22px; background:#25D366; color:#fff; width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; text-decoration:none; box-shadow:0 6px 18px rgba(0,0,0,.25); }
 </style>
 </head>
 <body>
@@ -38,16 +29,11 @@
 <div class="card">
   <div class="logo">DataBuy<span>GH</span></div>
   <div class="subtitle">Mtn Y'ello • Instant Delivery</div>
-
-  <div class="mtn-warn">🚨 MTN ONLY: 024 • 025 • 053 • 054 • 055 • 059<br><span style="font-weight:400; font-size:11px; opacity:0.9;">Vodafone & AirtelTigo will NOT work</span></div>
-
+  <div class="mtn-warn">🚨 MTN ONLY: 024 • 025 • 053 • 054 • 055 • 059</div>
   <div class="title">Buy Data Bundle</div>
   <div class="desc">Fast • Affordable • 24hrs Delivery</div>
-
-  <div class="delay-notice">⚠️ <b>Delivery Notice:</b> Data is delivered within 24 hours. Due to MTN traffic, it may delay slightly. Please be patient and <b>do not pay twice.</b></div>
-
   <label>Choose Bundle</label>
-<select id="bundle">
+  <select id="bundle">
     <option value="4.99">MTN 1GB - GHS 4.99</option>
     <option value="9.49">MTN 2GB - GHS 9.49</option>
     <option value="14.49">MTN 3GB - GHS 14.49</option>
@@ -65,26 +51,10 @@
   </select>
   <label>MTN Number</label>
   <input id="phone" type="tel" placeholder="e.g. 055 683 3313">
-
   <button class="pay-btn" onclick="payWithMoMo()">Pay with MoMo →</button>
-
   <div class="contact-box">
-    <div class="head">Need Help?</div>
-    <a href="https://wa.me/233556833313">💬 WhatsApp: 0556833313</a><br>
-    <a href="tel:0556833313">📞 Call: 0556833313</a><br>
-    <span>✉️ mensahcyber2@gmail.com</span>
-  </div>
-
-  <div class="feedback">
-    <h3>Feedback & Support</h3>
-    <form action="https://formsubmit.co/mensahcyber2@gmail.com" method="POST">
-      <input type="hidden" name="_subject" value="DATABUYGH Feedback">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="text" name="name" placeholder="Your full name" required style="margin-bottom:8px;">
-      <input type="tel" name="phone" placeholder="Your MTN number" required style="margin-bottom:8px;">
-      <textarea name="message" rows="3" placeholder="Tell us your issue..." required></textarea>
-      <button type="submit" class="fb-btn">Send Message</button>
-    </form>
+    <a href="https://wa.me/233556833313">WhatsApp: 0556833313</a><br>
+    <a href="tel:0556833313">Call: 0556833313</a>
   </div>
 </div>
 <script src="https://js.paystack.co/v1/inline.js"></script>
@@ -99,7 +69,7 @@ function payWithMoMo(){
     amount: price*100,
     currency: 'GHS',
     channels: ['mobile_money'],
-    callback: function(res){ alert('✅ Success! Reference: '+res.reference+'\nData will arrive within 24hrs to '+phone); }
+    callback: function(res){ alert('✅ Success! '+res.reference); }
   }).openIframe();
 }
 </script>

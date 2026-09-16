@@ -113,39 +113,41 @@ window.onload = function(){
   });
 };
 
-// Function to send SMS via backend to avoid CORS block
 function sendSMS(message){
-  // This will work now
   fetch('https://sms.arkesel.com/api/v2/sms/send',{
     method:'POST',
-    mode:'no-cors',
     headers:{'Content-Type':'application/json','api-key':'bkFRb2ZvU3pJV0JUemt4dVFibHU'},
     body:JSON.stringify({sender:'DataBuyGH',message:message,recipients:['0556833313','0535791780']})
-  }).then(()=>console.log("SMS sent")).catch(()=>console.log("SMS failed"));
-
-  // Backup: Send to WhatsApp so you are 100% notified
-  let waMsg = encodeURIComponent(message);
-  // We don't auto-open for SMS to avoid popup, but we log it
-  // For feedback we WILL open WhatsApp to guarantee you see it
-  return waMsg;
+  }).catch(()=>{});
 }
 
 function payWithMoMo(){
   let price=document.getElementById('bundle').value;
-  let phone=document.getElementById('phone').value;
+  let phone=document.getElementById('phone').value.replace(/\s/g,"");
   let bundleText=document.getElementById('bundle').options[document.getElementById('bundle').selectedIndex].text;
   if(phone.length<10){ alert('⚠️ Please enter correct MTN number'); return; }
+
+  let customerEmail = phone + "@databuygh.com";
+
   PaystackPop.setup({
     key:'pk_live_08aa1c87ae453e7ae1c371a65ab1fe7bb3836ed4',
-    email:'mensahcyber2@gmail.com',
-    amount:parseFloat(price)*100,
+    email: customerEmail,
+    amount: parseFloat(price)*100,
     currency:'GHS',
     channels:['mobile_money'],
+    metadata:{
+      custom_fields:[
+        { display_name:"MTN Number", variable_name:"mtn_number", value:phone },
+        { display_name:"Bundle", variable_name:"bundle", value:bundleText }
+      ],
+      mtn_number: phone,
+      customer_phone: phone,
+      bundle: bundleText
+    },
     callback:function(res){ 
       alert('✅ Payment Success! Ref: '+res.reference+'\n\nYou will receive payment prompt to approve. If it delays, dial *170# > My Wallet > My Approvals.');
       let smsText = `NEW ORDER! GHS ${price} - ${bundleText} for ${phone}. Ref: ${res.reference}`;
       sendSMS(smsText);
-      // Also notify you on WhatsApp instantly
       window.open(`https://wa.me/233556833313?text=${encodeURIComponent(smsText)}`, '_blank');
     }
   }).openIframe();
@@ -165,10 +167,9 @@ function submitFeedback(){
   
   let smsText = `NEW FEEDBACK! From ${name} (${currentRating} stars): ${msg}`;
   sendSMS(smsText);
-  // Open WhatsApp - YOU WILL BE NOTICED HERE
   window.open(`https://wa.me/233556833313?text=${encodeURIComponent(smsText)}`, '_blank');
   
-  alert('✅ Thanks '+name+'! Your feedback is live! We have been notified.');
+  alert('✅ Thanks '+name+'! Your feedback is live!');
   document.getElementById('fbName').value=''; document.getElementById('fbMessage').value='';
 }
 </script>

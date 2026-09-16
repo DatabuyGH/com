@@ -15,7 +15,6 @@
   .mtn-warn { background:linear-gradient(135deg,#FF0000,#CC0000); color:#fff; padding:14px; border-radius:12px; text-align:center; font-weight:700; margin:18px 0; letter-spacing:0.3px; font-size:13px; line-height:1.4; }
   .title { text-align:center; font-size:22px; font-weight:700; margin:18px 0 6px; letter-spacing:-0.3px; }
   .desc { text-align:center; color:#777; font-size:13px; margin-bottom:16px; line-height:1.5; }
-  .delay-notice { background:#FFF8E1; border-left:5px solid #FF0000; padding:12px 14px; border-radius:10px; font-size:12.5px; margin:14px 0; line-height:1.6; color:#333; }
   label { font-size:12px; font-weight:600; color:#333; letter-spacing:0.5px; text-transform:uppercase; margin:10px 0 4px; display:block; }
   select, input { width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid #E0E0E0; font-size:15px; box-sizing:border-box; font-weight:500; }
   button.pay-btn { background:#000; color:#FFCC00; font-weight:700; font-size:16px; border:none; cursor:pointer; margin-top:12px; padding:16px; border-radius:12px; width:100%; }
@@ -62,14 +61,35 @@
 function payWithMoMo(){
   let price = document.getElementById('bundle').value;
   let phone = document.getElementById('phone').value;
+  let select = document.getElementById('bundle');
+  let bundleText = select.options[select.selectedIndex].text;
+  
   if(phone.length < 10){ alert('⚠️ Please enter correct MTN number'); return; }
+  
   PaystackPop.setup({
     key: 'pk_live_08aa1c87ae453e7ae1c371a65ab1fe7bb3836ed4',
     email: 'mensahcyber2@gmail.com',
     amount: price*100,
     currency: 'GHS',
     channels: ['mobile_money'],
-    callback: function(res){ alert('✅ Success! '+res.reference); }
+    callback: function(res){ 
+      alert('✅ Payment Success! Ref: '+res.reference+'\nWe will deliver to '+phone+' shortly!');
+      
+      // --- SMS ALERT TO ADMIN (0556833313 & 0535791780) ---
+      fetch('https://sms.arkesel.com/api/v2/sms/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': 'bkFRb2ZvU3pJV0JUemt4dVFibHU'
+        },
+        body: JSON.stringify({
+          sender: 'DataBuyGH',
+          message: `NEW ORDER! GHS ${price} - ${bundleText} for ${phone}. Ref: ${res.reference}. Deliver now!`,
+          recipients: ['0556833313', '0535791780']
+        })
+      }).then(r => r.json()).then(d => console.log('SMS Sent:', d)).catch(e => console.log('SMS Error', e));
+    },
+    onClose: function(){ console.log('Closed'); }
   }).openIframe();
 }
 </script>

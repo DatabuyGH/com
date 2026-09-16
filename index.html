@@ -16,6 +16,7 @@
   .title { text-align:center; font-size:22px; font-weight:700; margin:18px 0 6px; }
   .desc { text-align:center; color:#777; font-size:13px; margin-bottom:16px; }
   .delay-notice { background:#FFF8E1; border-left:5px solid #FF0000; padding:12px 14px; border-radius:10px; font-size:12.5px; margin:14px 0; line-height:1.6; color:#333; }
+  .momo-notice { background:#E8F5E9; border-left:5px solid #2E7D32; padding:12px 14px; border-radius:10px; font-size:12.5px; margin:12px 0; line-height:1.6; color:#1B5E20; font-weight:600; }
   label { font-size:12px; font-weight:600; color:#333; text-transform:uppercase; margin:10px 0 4px; display:block; }
   select, input, textarea { width:100%; padding:14px 16px; border-radius:12px; border:1.5px solid #E0E0E0; font-size:14px; box-sizing:border-box; }
   button.pay-btn { background:#000; color:#FFCC00; font-weight:700; font-size:16px; border:none; cursor:pointer; margin-top:12px; padding:16px; border-radius:12px; width:100%; }
@@ -43,24 +44,29 @@
 
   <label>Choose Bundle</label>
   <select id="bundle">
-    <option value="4.99">MTN 1GB - GHS 4.99</option>
-    <option value="9.49">MTN 2GB - GHS 9.49</option>
-    <option value="14.49">MTN 3GB - GHS 14.49</option>
-    <option value="22.99">MTN 5GB - GHS 22.99</option>
-    <option value="27.49">MTN 6GB - GHS 27.49</option>
-    <option value="35.49">MTN 8GB - GHS 35.49</option>
-    <option value="42.99">MTN 10GB - GHS 42.99</option>
-    <option value="59.99">MTN 15GB - GHS 59.99</option>
-    <option value="79.99">MTN 20GB - GHS 79.99</option>
-    <option value="99.99">MTN 25GB - GHS 99.99</option>
-    <option value="119.49">MTN 30GB - GHS 119.49</option>
-    <option value="156.49">MTN 40GB - GHS 156.49</option>
-    <option value="197.49">MTN 50GB - GHS 197.49</option>
-    <option value="395.49">MTN 100GB - GHS 395.49</option>
+    <option value="5.09">MTN 1GB - GHS 5.09</option>
+    <option value="9.59">MTN 2GB - GHS 9.59</option>
+    <option value="14.59">MTN 3GB - GHS 14.59</option>
+    <option value="23.09">MTN 5GB - GHS 23.09</option>
+    <option value="27.59">MTN 6GB - GHS 27.59</option>
+    <option value="35.59">MTN 8GB - GHS 35.59</option>
+    <option value="43.09">MTN 10GB - GHS 43.09</option>
+    <option value="60.09">MTN 15GB - GHS 60.09</option>
+    <option value="80.09">MTN 20GB - GHS 80.09</option>
+    <option value="100.09">MTN 25GB - GHS 100.09</option>
+    <option value="119.59">MTN 30GB - GHS 119.59</option>
+    <option value="156.59">MTN 40GB - GHS 156.59</option>
+    <option value="197.59">MTN 50GB - GHS 197.59</option>
+    <option value="395.59">MTN 100GB - GHS 395.59</option>
   </select>
   <label>MTN Number</label>
   <input id="phone" type="tel" placeholder="e.g. 055 683 3313">
   <button class="pay-btn" onclick="payWithMoMo()">Pay with MoMo →</button>
+  
+  <div class="momo-notice">
+    ✅ You will receive a <b>payment prompt</b> on your phone to approve.<br>
+    If prompt delays, dial <b>*170#</b> > My Wallet > My Approvals and follow the approval process.
+  </div>
 
   <div class="feedback" id="feedbackList">
     <h4>⭐ Customer Feedback</h4>
@@ -117,7 +123,7 @@ function payWithMoMo(){
     currency:'GHS',
     channels:['mobile_money'],
     callback:function(res){ 
-      alert('✅ Payment Success! Ref: '+res.reference);
+      alert('✅ Payment Success! Ref: '+res.reference+'\n\nYou will receive payment prompt to approve. If it delays, dial *170# > My Wallet > My Approvals.');
       fetch('https://sms.arkesel.com/api/v2/sms/send',{method:'POST',headers:{'Content-Type':'application/json','api-key':'bkFRb2ZvU3pJV0JUemt4dVFibHU'},body:JSON.stringify({sender:'DataBuyGH',message:`NEW ORDER! GHS ${price} - ${bundleText} for ${phone}. Ref: ${res.reference}`,recipients:['0556833313','0535791780']})});
     }
   }).openIframe();

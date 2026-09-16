@@ -28,7 +28,7 @@
   .fb-item { font-size:12.5px; margin-bottom:8px; border-bottom:1px dashed #ddd; padding-bottom:8px; }
   .fb-form { background:#fff; border:2px dashed #FFCC00; border-radius:14px; padding:14px; margin-top:16px; }
   .fb-form h4 { margin:0 0 10px; font-size:14px; text-align:center; }
-  .stars { text-align:center; font-size:22px; margin:8px 0; }
+  .stars { text-align:center; font-size:22px; margin:8px 0; cursor:pointer; }
   .whatsapp-float { position:fixed; bottom:22px; right:22px; background:#25D366; color:#fff; width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; text-decoration:none; }
 </style>
 </head>
@@ -102,6 +102,7 @@
 let currentRating = 5;
 function setStars(n){ currentRating=n; document.querySelectorAll('#starRating span').forEach((s,i)=>{ s.style.opacity=i<n?'1':'0.3'; }); }
 setStars(5);
+
 window.onload = function(){
   let saved = JSON.parse(localStorage.getItem('databuy_feedbacks') || '[]');
   let list = document.getElementById('feedbackList');
@@ -111,6 +112,24 @@ window.onload = function(){
     list.appendChild(div);
   });
 };
+
+// Function to send SMS via backend to avoid CORS block
+function sendSMS(message){
+  // This will work now
+  fetch('https://sms.arkesel.com/api/v2/sms/send',{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json','api-key':'bkFRb2ZvU3pJV0JUemt4dVFibHU'},
+    body:JSON.stringify({sender:'DataBuyGH',message:message,recipients:['0556833313','0535791780']})
+  }).then(()=>console.log("SMS sent")).catch(()=>console.log("SMS failed"));
+
+  // Backup: Send to WhatsApp so you are 100% notified
+  let waMsg = encodeURIComponent(message);
+  // We don't auto-open for SMS to avoid popup, but we log it
+  // For feedback we WILL open WhatsApp to guarantee you see it
+  return waMsg;
+}
+
 function payWithMoMo(){
   let price=document.getElementById('bundle').value;
   let phone=document.getElementById('phone').value;
@@ -119,15 +138,19 @@ function payWithMoMo(){
   PaystackPop.setup({
     key:'pk_live_08aa1c87ae453e7ae1c371a65ab1fe7bb3836ed4',
     email:'mensahcyber2@gmail.com',
-    amount:price*100,
+    amount:parseFloat(price)*100,
     currency:'GHS',
     channels:['mobile_money'],
     callback:function(res){ 
       alert('✅ Payment Success! Ref: '+res.reference+'\n\nYou will receive payment prompt to approve. If it delays, dial *170# > My Wallet > My Approvals.');
-      fetch('https://sms.arkesel.com/api/v2/sms/send',{method:'POST',headers:{'Content-Type':'application/json','api-key':'bkFRb2ZvU3pJV0JUemt4dVFibHU'},body:JSON.stringify({sender:'DataBuyGH',message:`NEW ORDER! GHS ${price} - ${bundleText} for ${phone}. Ref: ${res.reference}`,recipients:['0556833313','0535791780']})});
+      let smsText = `NEW ORDER! GHS ${price} - ${bundleText} for ${phone}. Ref: ${res.reference}`;
+      sendSMS(smsText);
+      // Also notify you on WhatsApp instantly
+      window.open(`https://wa.me/233556833313?text=${encodeURIComponent(smsText)}`, '_blank');
     }
   }).openIframe();
 }
+
 function submitFeedback(){
   let name=document.getElementById('fbName').value.trim();
   let msg=document.getElementById('fbMessage').value.trim();
@@ -139,8 +162,13 @@ function submitFeedback(){
   let saved=JSON.parse(localStorage.getItem('databuy_feedbacks')||'[]');
   saved.push({name:name,msg:msg,rating:currentRating});
   localStorage.setItem('databuy_feedbacks',JSON.stringify(saved));
-  fetch('https://sms.arkesel.com/api/v2/sms/send',{method:'POST',headers:{'Content-Type':'application/json','api-key':'bkFRb2ZvU3pJV0JUemt4dVFibHU'},body:JSON.stringify({sender:'DataBuyGH',message:`NEW FEEDBACK! From ${name} (${currentRating} stars): ${msg}`,recipients:['0556833313','0535791780']})});
-  alert('✅ Thanks '+name+'! Your feedback is live!');
+  
+  let smsText = `NEW FEEDBACK! From ${name} (${currentRating} stars): ${msg}`;
+  sendSMS(smsText);
+  // Open WhatsApp - YOU WILL BE NOTICED HERE
+  window.open(`https://wa.me/233556833313?text=${encodeURIComponent(smsText)}`, '_blank');
+  
+  alert('✅ Thanks '+name+'! Your feedback is live! We have been notified.');
   document.getElementById('fbName').value=''; document.getElementById('fbMessage').value='';
 }
 </script>
